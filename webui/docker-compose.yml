@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  webui:
+    image: webui
+    build:
+      context: .
+      dockerfile: src/Dockerfile

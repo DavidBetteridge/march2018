@@ -1,0 +1,51 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Place Order";
+}
+
+<h1>Place Order</h1>
+
+<html>
+<body>
+
+    @if (!string.IsNullOrWhiteSpace(Model.OrderNumber))
+    {
+        <div class="alert alert-success" role="alert">
+            <strong>Your order has been successfully created.</strong><br />
+            Please take a note of this ID number and quote it on any enquires : @Model.OrderNumber
+        </div>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger" role="alert">
+              @Model.ErrorMessage
+        </div>
+    }
+
+    
+    <form method="POST">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm">Your Email Address:</div><div class="col-sm">@Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })<input asp-for="EmailAddress" size="50" class="form-control" placeholder="example@example.com" /></div>
+
+                <div class="col-sm">Product:</div><div class="col-sm">@Html.ValidationMessageFor(model => model.Product, "", new { @class = "text-danger" })<input asp-for="Product" class="form-control" placeholder="e.g. Pens" /></div>
+                <div class="col-sm">Preferred Language:</div><div class="col-sm">
+                    @Html.DropDownListFor(model => model.PreferredLanguage, new List<SelectListItem>
+   {
+       new SelectListItem {Text = "English", Value = "English", Selected = true },
+       new SelectListItem {Text = "French", Value = "French" },
+       new SelectListItem {Text = "Spanish", Value = "Spanish" },
+       new SelectListItem {Text = "Italian", Value = "Italian" },
+   }, new { @class = "form-control" })
+                </div>
+                <div class="col-sm">Quantity:</div>@Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })<div class="col-sm"><input asp-for="Total" class="form-control" placeholder="Number of units to order" /></div>
+            </div>
+        </div>
+        <p></p>
+        <input value="Submit order" type="submit" class="btn btn-lg btn-success" />
+    </form>
+</body>
+</html>
